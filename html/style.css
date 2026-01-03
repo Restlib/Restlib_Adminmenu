@@ -1,0 +1,331 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+* { 
+    box-sizing: border-box; 
+    outline: none; 
+    user-select: none; /* Yazıların seçilmesini engeller */
+}
+
+body {
+    margin: 0; padding: 0; overflow: hidden;
+    background: transparent;
+    font-family: 'Inter', sans-serif;
+    display: none; /* JS ile açılacak */
+}
+
+/* --- TABLET KASA & DUVAR KAĞIDI --- */
+.tablet-wrapper {
+    width: 100vw; height: 100vh;
+    display: flex; justify-content: center; align-items: center;
+}
+
+.tablet-frame {
+    width: 1060px; height: 780px;
+    background: #000;
+    border-radius: 44px; /* iPad köşeleri */
+    padding: 12px; /* Çerçeve kalınlığı */
+    box-shadow: 0 0 60px rgba(0,0,0,0.6), inset 0 0 10px rgba(255,255,255,0.1);
+    position: relative;
+}
+
+.tablet-container {
+    width: 100%; height: 100%;
+    background: #000;
+    border-radius: 32px;
+    position: relative;
+    overflow: hidden; /* İçerik taşmasın */
+    color: white;
+}
+
+/* iOS Tarzı Duvar Kağıdı */
+.ipad-wallpaper {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    /* Modern, renkli gradient arka plan */
+    background: linear-gradient(125deg, #1cb5e0 0%, #000851 100%); 
+    z-index: 0;
+}
+
+.ipad-wallpaper::after {
+    content: '';
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.2); /* Hafif karartma */
+    backdrop-filter: blur(0px);
+}
+
+/* --- ÜST BAR & DYNAMIC ISLAND --- */
+.top-bar {
+    position: relative;
+    z-index: 10;
+    padding: 10px 25px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 14px; font-weight: 600;
+}
+
+/* Dynamic Island Tasarımı */
+.dynamic-island {
+    position: absolute;
+    left: 50%; top: 10px;
+    transform: translateX(-50%);
+    height: 32px;
+    width: 120px; /* Kapalıyken küçük */
+    background: #000;
+    border-radius: 20px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+}
+
+/* Bildirim gelince JS ile bu class eklenecek */
+.dynamic-island.active {
+    width: 250px;
+    height: 45px;
+}
+
+.island-content {
+    display: flex; align-items: center; gap: 10px;
+    opacity: 0; transition: opacity 0.2s;
+    white-space: nowrap;
+}
+
+.dynamic-island.active .island-content {
+    opacity: 1;
+}
+
+.island-icon { color: #f1c40f; }
+.island-msg { font-size: 13px; font-weight: 500; }
+
+.top-icons { display: flex; gap: 8px; font-size: 14px; }
+
+/* --- ANA EKRAN & PENCERELER --- */
+.app-screen {
+    position: relative; z-index: 5;
+    padding: 10px 30px;
+    height: calc(100% - 110px); /* Dock payı düşüldü */
+}
+
+.app-window {
+    display: none; height: 100%;
+    animation: zoomIn 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.app-window.active { display: block; }
+
+@keyframes zoomIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* --- GLASSMORPHISM ORTAK SINIFLAR --- */
+.glass-card, .glass-panel, .glass-sidebar, .glass-content, .glass-dock {
+    background: rgba(255, 255, 255, 0.12); /* Daha şeffaf */
+    backdrop-filter: blur(25px); /* Güçlü blur */
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    color: white;
+}
+
+/* --- DASHBOARD WIDGETS --- */
+.content-wrapper {
+    display: flex; flex-direction: column; gap: 20px; height: 100%;
+}
+
+.widget-grid {
+    display: flex; gap: 15px;
+}
+
+.widget { padding: 15px; display: flex; align-items: center; gap: 15px; }
+.small-widget { flex: 1; }
+.wide-widget { flex: 2; display: flex; justify-content: space-between; padding-right: 20px; }
+
+.widget-icon {
+    width: 50px; height: 50px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: white;
+}
+
+.blue-bg { background: linear-gradient(135deg, #36d1dc, #5b86e5); }
+.orange-bg { background: linear-gradient(135deg, #fce38a, #f38181); }
+
+.widget-info h2 { margin: 0; font-size: 24px; }
+.widget-info p { margin: 0; font-size: 12px; opacity: 0.7; }
+
+.weather-btn {
+    background: rgba(255,255,255,0.2); border: none;
+    border-radius: 50%; width: 40px; height: 40px;
+    font-size: 18px; cursor: pointer; transition: 0.2s;
+}
+.weather-btn:hover { background: rgba(255,255,255,0.4); transform: scale(1.1); }
+
+/* --- ADMIN KONTROL MERKEZİ (Grid Butonlar) --- */
+.admin-control-center {
+    flex: 1; padding: 20px;
+    display: flex; flex-direction: column;
+}
+.admin-control-center h3 { margin-top: 0; opacity: 0.8; font-weight: 500; font-size: 16px;}
+
+.control-grid {
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); 
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.ctrl-btn {
+    display: flex; flex-direction: row; align-items: center; gap: 12px;
+    background: rgba(0,0,0,0.2);
+    border: none; border-radius: 16px;
+    padding: 15px;
+    color: white; cursor: pointer; transition: 0.2s;
+    text-align: left;
+}
+
+.ctrl-btn:hover { background: rgba(255,255,255,0.1); }
+
+/* Aktif (Açık) Buton Durumu */
+.ctrl-btn[data-active="true"] {
+    background: rgba(255,255,255,0.9);
+    color: #000;
+}
+.ctrl-btn[data-active="true"] .icon-box { background: transparent; color: #000; }
+
+.icon-box {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+}
+.icon-box.red { background: #ff3b30; }
+.icon-box.blue { background: #007aff; }
+.icon-box.gray { background: #8e8e93; }
+.icon-box.purple { background: #af52de; }
+.icon-box.orange { background: #ff9500; }
+.icon-box.green { background: #34c759; }
+
+/* --- OYUNCU LİSTESİ (Split View) --- */
+.ios-split-view {
+    display: flex; height: 100%; gap: 20px;
+}
+
+.sidebar {
+    width: 300px; display: flex; flex-direction: column;
+    padding: 15px;
+}
+
+.search-bar {
+    background: rgba(0,0,0,0.3); border-radius: 10px;
+    padding: 8px 12px; display: flex; align-items: center; gap: 10px;
+    margin-bottom: 15px;
+}
+.search-bar input {
+    background: transparent; border: none; color: white; width: 100%;
+}
+
+.scroll-content { overflow-y: auto; flex: 1; padding-right: 5px; }
+
+.player-item {
+    padding: 12px; margin-bottom: 8px; border-radius: 12px;
+    background: rgba(255,255,255,0.05); cursor: pointer; transition: 0.2s;
+    display: flex; align-items: center; gap: 10px;
+}
+.player-item:hover { background: rgba(255,255,255,0.15); }
+.player-item.selected { background: #007aff; }
+
+.main-detail {
+    flex: 1; padding: 25px;
+    display: flex; flex-direction: column;
+}
+
+.detail-header { display: flex; align-items: center; gap: 20px; margin-bottom: 25px; }
+.avatar-circle {
+    width: 60px; height: 60px; background: #8e8e93;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+}
+
+.action-grid-ios {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px;
+}
+.ios-action-btn {
+    background: rgba(255,255,255,0.1); border: none;
+    padding: 15px; border-radius: 12px; color: white; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    font-size: 13px; transition: 0.2s;
+}
+.ios-action-btn:hover { background: rgba(255,255,255,0.2); }
+.ios-action-btn.green { background: rgba(52, 199, 89, 0.2); color: #34c759; }
+.ios-action-btn.blue { background: rgba(0, 122, 255, 0.2); color: #007aff; }
+
+/* Input Grupları */
+.ios-input-group {
+    background: rgba(0,0,0,0.2); border-radius: 15px; padding: 15px; margin-bottom: 15px;
+}
+.input-row { display: flex; gap: 10px; margin-top: 10px; }
+.input-row input {
+    background: rgba(255,255,255,0.1); border: none; padding: 10px; border-radius: 8px; color: white;
+}
+.btn-sm { background: #007aff; border: none; border-radius: 8px; color: white; cursor: pointer; padding: 0 15px;}
+.ios-danger-btn {
+    width: 100%; padding: 12px; background: rgba(255, 59, 48, 0.15); color: #ff3b30;
+    border: 1px solid rgba(255, 59, 48, 0.3); border-radius: 12px; cursor: pointer;
+    margin-top: auto;
+}
+
+/* --- ARAÇLAR & BLIPS (Kart Tasarımı) --- */
+.ios-card-container { display: flex; gap: 20px; height: 100%; }
+.big-card {
+    flex: 1; padding: 30px; display: flex; flex-direction: column; align-items: center; text-align: center; justify-content: center;
+}
+.card-icon { font-size: 50px; margin-bottom: 20px; color: rgba(255,255,255,0.8); }
+.input-wrapper { display: flex; gap: 10px; width: 100%; margin-top: 20px; }
+.input-wrapper input { flex: 1; padding: 12px; border-radius: 12px; border: none; background: rgba(255,255,255,0.1); color: white; }
+
+.ios-btn-primary { background: #007aff; color: white; border: none; padding: 12px 20px; border-radius: 12px; cursor: pointer; }
+.ios-btn-secondary { background: #ff9500; color: white; border: none; padding: 12px; border-radius: 12px; width: 100%; margin-bottom: 10px; cursor: pointer;}
+.ios-btn-danger { background: #ff3b30; color: white; border: none; padding: 12px; border-radius: 12px; width: 100%; cursor: pointer;}
+
+.blip-inputs { display: flex; flex-direction: column; gap: 10px; width: 80%; margin: 20px auto; }
+.blip-inputs input { padding: 10px; background: rgba(255,255,255,0.1); border:none; border-radius: 8px; color: white; }
+.list-ios { margin-top: 15px; height: 200px; overflow-y: auto; width: 100%; }
+
+/* --- DOCK (ALT MENÜ) --- */
+.dock-wrapper {
+    position: absolute; bottom: 20px; width: 100%;
+    display: flex; flex-direction: column; align-items: center; z-index: 20;
+}
+
+.dock {
+    padding: 12px 20px; border-radius: 35px;
+    display: flex; gap: 20px; align-items: center;
+}
+
+.dock-item {
+    width: 55px; height: 55px; border-radius: 15px;
+    background: rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; cursor: pointer; transition: 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    position: relative;
+}
+
+.dock-item:hover { transform: translateY(-15px) scale(1.1); background: rgba(255,255,255,0.25); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+.dock-item.danger { background: rgba(255, 59, 48, 0.2); color: #ff3b30; }
+
+.dock-separator { width: 1px; height: 40px; background: rgba(255,255,255,0.2); }
+
+.home-indicator {
+    width: 140px; height: 5px; background: white; border-radius: 10px; margin-top: 15px; opacity: 0.7;
+}
+
+/* --- SCROLLBAR --- */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 10px; }
+
+/* --- MODAL --- */
+.ios-modal {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5); z-index: 50;
+    display: none; align-items: center; justify-content: center;
+}
+.modal-card { width: 60%; padding: 20px; max-height: 80%; display: flex; flex-direction: column; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 15px; }
+.inventory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; overflow-y: auto; }
+.inv-item { background: rgba(255,255,255,0.1); padding: 10px; text-align: center; border-radius: 8px; font-size: 12px; }

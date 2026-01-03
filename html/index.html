@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>RestLib Tablet v3.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="tablet-wrapper">
+        <div class="tablet-frame">
+            <div class="tablet-container">
+                
+                <div class="ipad-wallpaper"></div>
+
+                <div class="top-bar">
+                    <span id="tablet-time">12:00</span>
+                    
+                    <div class="dynamic-island" id="dynamicIsland">
+                        <div class="island-content">
+                            <i class="fa-solid fa-shield-cat island-icon"></i>
+                            <span class="island-msg">Admin Menü</span>
+                        </div>
+                    </div>
+
+                    <div class="top-icons">
+                        <i class="fa-solid fa-signal"></i>
+                        <i class="fa-solid fa-wifi"></i>
+                        <i class="fa-solid fa-battery-full"></i>
+                    </div>
+                </div>
+
+                <div class="app-screen">
+                    
+                    <div id="dashboard" class="app-window active">
+                        <div class="content-wrapper">
+                            <div class="widget-grid">
+                                <div class="widget glass-card small-widget">
+                                    <div class="widget-icon blue-bg"><i class="fa-solid fa-users"></i></div>
+                                    <div class="widget-info">
+                                        <h2 id="total-players">0</h2>
+                                        <p>Aktif Oyuncu</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="widget glass-card wide-widget">
+                                    <div class="widget-header">
+                                        <div class="widget-icon orange-bg"><i class="fa-solid fa-cloud-sun"></i></div>
+                                        <h3>Hava Durumu</h3>
+                                    </div>
+                                    <div class="quick-actions-row">
+                                        <button onclick="setWeather('EXTRASUNNY')" class="weather-btn">☀️</button>
+                                        <button onclick="setWeather('RAIN')" class="weather-btn">🌧️</button>
+                                        <button onclick="setWeather('XMAS')" class="weather-btn">❄️</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="admin-control-center glass-panel">
+                                <h3>Kişisel Kontroller</h3>
+                                <div class="control-grid">
+                                    <button onclick="toggleSelf('GodMode')" class="ctrl-btn" data-active="false">
+                                        <div class="icon-box red"><i class="fa-solid fa-heart"></i></div>
+                                        <span>God Mode</span>
+                                    </button>
+                                    <button onclick="toggleSelf('Noclip')" class="ctrl-btn" data-active="false">
+                                        <div class="icon-box blue"><i class="fa-solid fa-ghost"></i></div>
+                                        <span>Noclip</span>
+                                    </button>
+                                    <button onclick="toggleSelf('Invisible')" class="ctrl-btn" data-active="false">
+                                        <div class="icon-box gray"><i class="fa-solid fa-eye-slash"></i></div>
+                                        <span>Görünmez</span>
+                                    </button>
+                                    <button onclick="toggleSelf('ShowNames')" class="ctrl-btn" data-active="false">
+                                        <div class="icon-box purple"><i class="fa-solid fa-tags"></i></div>
+                                        <span>İsimler</span>
+                                    </button>
+                                    <button onclick="toggleSelf('SuperSpeed')" class="ctrl-btn" data-active="false">
+                                        <div class="icon-box orange"><i class="fa-solid fa-bolt"></i></div>
+                                        <span>Hız</span>
+                                    </button>
+                                    <button onclick="toggleSelf('SuperJump')" class="ctrl-btn" data-active="false">
+                                        <div class="icon-box green"><i class="fa-solid fa-up-long"></i></div>
+                                        <span>Zıpla</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="players" class="app-window">
+                        <div class="ios-split-view">
+                            <div class="sidebar glass-sidebar">
+                                <div class="search-bar">
+                                    <i class="fa-solid fa-search"></i>
+                                    <input type="text" placeholder="Oyuncu Ara..." id="player-search">
+                                </div>
+                                <div id="player-list" class="scroll-content"></div>
+                            </div>
+                            <div class="main-detail glass-content" id="player-details">
+                                <div class="detail-header">
+                                    <div class="avatar-circle">
+                                        <i class="fa-solid fa-user"></i>
+                                    </div>
+                                    <h2 id="selected-name">Oyuncu Seçilmedi</h2>
+                                </div>
+                                
+                                <div class="action-grid-ios">
+                                    <button onclick="revivePlayer()" class="ios-action-btn green"><i class="fa-solid fa-stethoscope"></i> Canlandır</button>
+                                    <button onclick="checkInventory()" class="ios-action-btn blue"><i class="fa-solid fa-box-open"></i> Envanter</button>
+                                    <button onclick="pAction('goto')" class="ios-action-btn"><i class="fa-solid fa-location-arrow"></i> Git</button>
+                                    <button onclick="pAction('bring')" class="ios-action-btn"><i class="fa-solid fa-magnet"></i> Çek</button>
+                                </div>
+
+                                <div class="ios-input-group">
+                                    <label>Yönetim İşlemleri</label>
+                                    <div class="input-row">
+                                        <input type="text" id="item-input" placeholder="Item">
+                                        <input type="number" id="amount-input" value="1" style="width: 50px;">
+                                        <button onclick="giveItem()" class="btn-sm">Ver</button>
+                                    </div>
+                                    <div class="input-row">
+                                        <input type="text" id="job-input" placeholder="Job">
+                                        <input type="number" id="grade-input" value="0" style="width: 50px;">
+                                        <button onclick="setJob()" class="btn-sm">Set</button>
+                                    </div>
+                                </div>
+                                <button onclick="pAction('kick')" class="ios-danger-btn">Sunucudan At</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="vehicles" class="app-window">
+                        <div class="ios-card-container">
+                            <div class="glass-card big-card">
+                                <div class="card-icon"><i class="fa-solid fa-car"></i></div>
+                                <h3>Araç Oluştur</h3>
+                                <p>Spawn edilecek aracı girin.</p>
+                                <div class="input-wrapper">
+                                    <input type="text" id="veh-model" placeholder="Model (t20, adder...)">
+                                    <button onclick="spawnCar()" class="ios-btn-primary">Oluştur</button>
+                                </div>
+                            </div>
+                            <div class="glass-card big-card">
+                                <div class="card-icon"><i class="fa-solid fa-wrench"></i></div>
+                                <h3>Araç İşlemleri</h3>
+                                <div class="btn-stack">
+                                    <button onclick="vehAction('repair')" class="ios-btn-secondary">Tamir & Temizle</button>
+                                    <button onclick="vehAction('delete')" class="ios-btn-danger">Aracı Sil</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="blip-manager" class="app-window">
+                        <div class="glass-card center-card">
+                            <h3><i class="fa-solid fa-map-pin"></i> Blip Yöneticisi</h3>
+                            <div class="blip-inputs">
+                                <input type="text" id="blip-name" placeholder="Blip Adı">
+                                <div class="row">
+                                    <input type="number" id="blip-sprite" placeholder="Sprite ID">
+                                    <input type="number" id="blip-color" placeholder="Color ID">
+                                </div>
+                                <button onclick="saveCurrentPosBlip()" class="ios-btn-primary full">Kaydet</button>
+                            </div>
+                            <div id="active-blips" class="list-ios"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="dock-wrapper">
+                    <div class="dock glass-dock">
+                        <div class="dock-item" onclick="openApp('dashboard')"><i class="fa-solid fa-house"></i></div>
+                        <div class="dock-item" onclick="openApp('players')"><i class="fa-solid fa-users"></i></div>
+                        <div class="dock-item" onclick="openApp('vehicles')"><i class="fa-solid fa-car"></i></div>
+                        <div class="dock-item" onclick="openApp('blip-manager')"><i class="fa-solid fa-map"></i></div>
+                        <div class="dock-separator"></div>
+                        <div class="dock-item danger" onclick="closeMenu()"><i class="fa-solid fa-power-off"></i></div>
+                    </div>
+                    <div class="home-indicator"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="inventory-modal" class="ios-modal">
+        <div class="modal-card glass">
+            <div class="modal-header">
+                <h3>Oyuncu Çantası</h3>
+                <button onclick="$('#inventory-modal').fadeOut()" class="close-btn">X</button>
+            </div>
+            <div id="inventory-list" class="inventory-grid"></div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "resv-admin-bot",
+  "version": "1.0.0",
+  "main": "server/bot.js",
+  "dependencies": {
+    "discord.js": "13.17.1",
+    "dotenv": "^16.0.3"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
